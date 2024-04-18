@@ -8,10 +8,10 @@ export const CreateBlog = async(req,res) => {
         const newblog = new Blogs({title,shortdes,longdes,author : id,banner});
         await newblog.save().then((blog) => {
             User.findOneAndUpdate({_id : id} ,{$push : {"blogs" : blog._id}}).then(() => {
-                return res.json("done")
+                return res.status(200).json("published")
             })
         })
-        return res.status(200).json("published")
+        
     } catch (error) {
         console.log(error);
         return res.status(400).json("something went wrong")
